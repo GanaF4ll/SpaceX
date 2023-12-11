@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// Définir le schéma du modèle
 const launchSchema = new mongoose.Schema({
   flight_id: { type: String, required: true },
   flight_number: { type: Number, required: true },
@@ -52,8 +51,6 @@ const launchSchema = new mongoose.Schema({
   launch_success: { type: Boolean, default: false },
 });
 
-// Créer le modèle à partir du schéma
 const Launch = mongoose.model("Launch", launchSchema);
 
-// Exporter le modèle
 module.exports = Launch;

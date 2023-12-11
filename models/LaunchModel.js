@@ -167,17 +167,27 @@ let commentSchema = new Schema({
     flight_club: null,
   },
   launch_site: {
-    site_id: "kwajalein_atoll",
-    site_name: "Kwajalein Atoll",
-    site_name_long: "Kwajalein Atoll Omelek Island",
+    site_id: {
+      type: String,
+    },
+    site_name: {
+      type: String,
+    },
+    site_name_long: {
+      type: String,
+    },
   },
   launch_success: {
     type: Boolean,
   },
   launch_failure_details: {
-    time: 33,
+    time: {
+      type: String,
+    },
     altitude: null,
-    reason: "merlin engine failure",
+    reason: {
+      type: String,
+    },
   },
   links: {
     mission_patch: {
@@ -213,7 +223,9 @@ let commentSchema = new Schema({
   static_fire_date_utc: {
     type: Date,
   },
-  static_fire_date_unix: 1142553600,
+  static_fire_date_unix: {
+    type: String,
+  },
   timeline: {
     type: String,
   },

@@ -1,6 +1,5 @@
 const Launch = require("../models/LaunchModel");
-const LaunchApi = require("../providers/LaunchData");
-
+const LaunchApi = require("../providers/LaunchProvider");
 exports.listAllLaunches = async (req, res) => {
   try {
     const getLaunches = await Launch.find({

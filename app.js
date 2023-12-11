@@ -10,7 +10,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/apinode");
 const app = express();
 const port = 3004;
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const launchRoute = require("./routes/LaunchRoute");

@@ -1,250 +1,59 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
+// Définir le schéma du modèle
+const launchSchema = new mongoose.Schema({
+  flight_id: { type: String, required: true },
+  flight_number: { type: Number, required: true },
+  launch_year: { type: Number, required: true },
+  launch_date_utc: { type: Date, required: true },
+  launch_date_local: { type: Date, required: true },
+  tbd: { type: Boolean, default: false },
+  rocket_id: { type: String, required: true },
+  rocket_name: { type: String, required: true },
+  rocket_type: { type: String, required: true },
+  core_serial: { type: String },
+  land_success: { type: Boolean, default: false },
+  landing_intent: { type: Boolean, default: false },
+  landing_type: { type: String },
+  landing_vehicle: { type: String },
+  cap_serial: { type: String },
+  core_flight: { type: Number },
+  block: { type: Number },
+  gridfins: { type: Boolean, default: false },
+  legs: { type: Boolean, default: false },
+  core_reuse: { type: Boolean, default: false },
+  capsule_reuse: { type: Boolean, default: false },
+  fairings_reused: { type: Boolean, default: false },
+  fairings_recovery_attempt: { type: Boolean, default: false },
+  fairings_recovered: { type: Boolean, default: false },
+  fairings_ship: { type: String },
+  site_id: { type: String },
+  site_name: { type: String },
+  payload_id: { type: String },
+  norad_id: { type: Number },
+  customer: { type: String },
+  nationality: { type: String },
+  manufacturer: { type: String },
+  payload_type: { type: String },
+  orbit: { type: String },
+  reference_system: { type: String },
+  regime: { type: String },
+  longitude: { type: Number },
+  semi_major_axis_km: { type: Number },
+  eccentricity: { type: Number },
+  periapsis_km: { type: Number },
+  apoapsis_km: { type: Number },
+  inclination_deg: { type: Number },
+  period_min: { type: Number },
+  lifespan_years: { type: Number },
+  epoch: { type: Date },
+  mean_motion: { type: Number },
+  raan: { type: Number },
+  launch_success: { type: Boolean, default: false },
+});
 
-const launchSchema = new mongoose.Schema(
-  {
-    flight_number: {
-      type: Number,
-      required: true,
-    },
-    name: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    date_utc: {
-      type: String,
-      required: true,
-    },
-    date_unix: {
-      type: Number,
-      required: true,
-    },
-    date_local: {
-      type: String,
-      required: true,
-    },
-    date_precision: {
-      type: String,
-      required: true,
-      enum: ["half", "quarter", "year", "month", "day", "hour"],
-    },
-    static_fire_date_utc: {
-      type: String,
-      default: null,
-    },
-    static_fire_date_unix: {
-      type: Number,
-      default: null,
-    },
-    tbd: {
-      type: Boolean,
-      default: false,
-    },
-    net: {
-      type: Boolean,
-      default: false,
-    },
-    window: {
-      type: Number,
-      default: null,
-    },
-    rocket: {
-      type: mongoose.ObjectId,
-      ref: "Rocket",
-      default: null,
-    },
-    success: {
-      type: Boolean,
-      default: null,
-    },
-    failures: [
-      {
-        _id: false,
-        time: {
-          type: Number,
-        },
-        altitude: {
-          type: Number,
-        },
-        reason: {
-          type: String,
-        },
-      },
-    ],
-    upcoming: {
-      type: Boolean,
-      required: true,
-    },
-    details: {
-      type: String,
-      default: null,
-    },
-    fairings: {
-      reused: {
-        type: Boolean,
-        default: null,
-      },
-      recovery_attempt: {
-        type: Boolean,
-        default: null,
-      },
-      recovered: {
-        type: Boolean,
-        default: null,
-      },
-      ships: [
-        {
-          type: mongoose.ObjectId,
-          ref: "Ship",
-        },
-      ],
-    },
-    crew: [
-      {
-        _id: false,
-        crew: {
-          type: mongoose.ObjectId,
-          ref: "Crew",
-          default: null,
-        },
-        role: {
-          type: String,
-          default: null,
-        },
-      },
-    ],
-    ships: [
-      {
-        type: mongoose.ObjectId,
-        ref: "Ship",
-      },
-    ],
-    capsules: [
-      {
-        type: mongoose.ObjectId,
-        ref: "Capsule",
-      },
-    ],
-    payloads: [
-      {
-        type: mongoose.ObjectId,
-        ref: "Payload",
-      },
-    ],
-    launchpad: {
-      type: mongoose.ObjectId,
-      ref: "Launchpad",
-      default: null,
-    },
-    cores: [
-      {
-        _id: false,
-        core: {
-          type: mongoose.ObjectId,
-          ref: "Core",
-          default: null,
-        },
-        flight: {
-          type: Number,
-          default: null,
-        },
-        gridfins: {
-          type: Boolean,
-          default: null,
-        },
-        legs: {
-          type: Boolean,
-          default: null,
-        },
-        reused: {
-          type: Boolean,
-          default: null,
-        },
-        landing_attempt: {
-          type: Boolean,
-          default: null,
-        },
-        landing_success: {
-          type: Boolean,
-          default: null,
-        },
-        landing_type: {
-          type: String,
-          default: null,
-        },
-        landpad: {
-          type: mongoose.ObjectId,
-          ref: "Landpad",
-          default: null,
-        },
-      },
-    ],
-    links: {
-      patch: {
-        small: {
-          type: String,
-          default: null,
-        },
-        large: {
-          type: String,
-          default: null,
-        },
-      },
-      reddit: {
-        campaign: {
-          type: String,
-          default: null,
-        },
-        launch: {
-          type: String,
-          default: null,
-        },
-        media: {
-          type: String,
-          default: null,
-        },
-        recovery: {
-          type: String,
-          default: null,
-        },
-      },
-      flickr: {
-        small: [String],
-        original: [String],
-      },
-      presskit: {
-        type: String,
-        default: null,
-      },
-      webcast: {
-        type: String,
-        default: null,
-      },
-      youtube_id: {
-        type: String,
-        default: null,
-      },
-      article: {
-        type: String,
-        default: null,
-      },
-      wikipedia: {
-        type: String,
-        default: null,
-      },
-    },
-    auto_update: {
-      type: Boolean,
-      default: true,
-    },
-    launch_library_id: {
-      type: String,
-      default: null,
-    },
-  },
-  { autoCreate: true }
-);
+// Créer le modèle à partir du schéma
+const Launch = mongoose.model("Launch", launchSchema);
 
-module.exports = mongoose.model("Launch", launchSchema);
+// Exporter le modèle
+module.exports = Launch;

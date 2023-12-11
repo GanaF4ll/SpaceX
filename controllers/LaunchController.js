@@ -3,7 +3,9 @@ const LaunchApi = require("../providers/LaunchData");
 
 exports.listAllLaunches = async (req, res) => {
   try {
-    const Launches = await Launch.find({ mission_id: req.params.mission_id });
+    const getLaunches = await Launch.find({
+      mission_id: req.params.mission_id,
+    });
     res.status(200);
     res.json(Launches);
   } catch (error) {

@@ -13,7 +13,7 @@ const port = 3004;
 app.use(express.urlencoded());
 app.use(express.json());
 
-const launchRoute = require("./routes/launchRoute");
+const launchRoute = require("./routes/LaunchRoute");
 app.use("/launches", launchRoute);
 
 app.listen(port, () => {

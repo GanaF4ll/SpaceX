@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const launchRoute = require("./routes/LaunchRoute");
-app.use("/launches", launchRoute);
+app.use("/", launchRoute);
 
 app.listen(port, () => {
   console.log(`Space X app listening on port ${port}`);

@@ -2,233 +2,249 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-let commentSchema = new Schema({
-  flight_number: 1,
-  mission_name: {
-    type: String,
-    required: {
+const launchSchema = new mongoose.Schema(
+  {
+    flight_number: {
+      type: Number,
+      required: true,
+    },
+    name: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    date_utc: {
+      type: String,
+      required: true,
+    },
+    date_unix: {
+      type: Number,
+      required: true,
+    },
+    date_local: {
+      type: String,
+      required: true,
+    },
+    date_precision: {
+      type: String,
+      required: true,
+      enum: ["half", "quarter", "year", "month", "day", "hour"],
+    },
+    static_fire_date_utc: {
+      type: String,
+      default: null,
+    },
+    static_fire_date_unix: {
+      type: Number,
+      default: null,
+    },
+    tbd: {
       type: Boolean,
+      default: false,
     },
-  },
-  mission_id: {
-    type: String,
-  },
-  upcoming: {
-    type: Boolean,
-  },
-  launch_year: {
-    type: Date,
-    default: Date.now,
-  },
-  launch_date_unix: {
-    type: Datetime,
-    default: Date.now,
-  },
-  launch_date_utc: {
-    type: Datetime,
-    default: Date.now,
-  },
-  launch_date_local: {
-    type: Datetime,
-    default: Date.now,
-  },
-  is_tentative: {
-    type: Boolean,
-  },
-  tentative_max_precision: "hour",
-  tbd: {
-    type: Boolean,
-  },
-  launch_window: 0,
-  rocket: {
-    rocket_id: {
-      type: String,
+    net: {
+      type: Boolean,
+      default: false,
     },
-    rocket_name: {
-      type: String,
+    window: {
+      type: Number,
+      default: null,
     },
-    rocket_type: {
-      type: String,
+    rocket: {
+      type: mongoose.ObjectId,
+      ref: "Rocket",
+      default: null,
     },
-    first_stage: {
-      cores: [
-        {
-          core_serial: {
-            type: String,
-          },
-          flight: {
-            type: String,
-          },
-          block: null,
-          gridfins: {
-            type: Boolean,
-          },
-          legs: {
-            type: Boolean,
-          },
-          reused: {
-            type: Boolean,
-          },
-          land_success: null,
-          landing_intent: {
-            type: Boolean,
-          },
-          landing_type: null,
-          landing_vehicle: null,
+    success: {
+      type: Boolean,
+      default: null,
+    },
+    failures: [
+      {
+        _id: false,
+        time: {
+          type: Number,
         },
-      ],
-    },
-    second_stage: {
-      block: {
-        type: String,
+        altitude: {
+          type: Number,
+        },
+        reason: {
+          type: String,
+        },
       },
-      payloads: [
-        {
-          payload_id: {
-            type: String,
-          },
-
-          norad_id: {
-            type: String,
-          },
-          reused: {
-            type: Boolean,
-          },
-          customers: {
-            type: String,
-          },
-          nationality: {
-            type: String,
-          },
-          manufacturer: {
-            type: String,
-          },
-          payload_type: {
-            type: String,
-          },
-          payload_mass_kg: {
-            type: String,
-          },
-          payload_mass_lbs: {
-            type: String,
-          },
-          orbit: {
-            type: String,
-          },
-          orbit_params: {
-            reference_system: {
-              type: String,
-            },
-            regime: {
-              type: String,
-            },
-            longitude: null,
-            semi_major_axis_km: null,
-            eccentricity: null,
-            periapsis_km: {
-              type: String,
-            },
-            apoapsis_km: {
-              type: String,
-            },
-            inclination_deg: {
-              type: String,
-            },
-            period_min: {
-              type: String,
-            },
-            lifespan_years: {
-              type: String,
-            },
-            epoch: null,
-            mean_motion: null,
-            raan: null,
-            arg_of_pericenter: null,
-            mean_anomaly: null,
-          },
-        },
-      ],
+    ],
+    upcoming: {
+      type: Boolean,
+      required: true,
+    },
+    details: {
+      type: String,
+      default: null,
     },
     fairings: {
       reused: {
         type: Boolean,
+        default: null,
       },
       recovery_attempt: {
         type: Boolean,
+        default: null,
       },
       recovered: {
         type: Boolean,
+        default: null,
       },
-      ship: null,
+      ships: [
+        {
+          type: mongoose.ObjectId,
+          ref: "Ship",
+        },
+      ],
+    },
+    crew: [
+      {
+        _id: false,
+        crew: {
+          type: mongoose.ObjectId,
+          ref: "Crew",
+          default: null,
+        },
+        role: {
+          type: String,
+          default: null,
+        },
+      },
+    ],
+    ships: [
+      {
+        type: mongoose.ObjectId,
+        ref: "Ship",
+      },
+    ],
+    capsules: [
+      {
+        type: mongoose.ObjectId,
+        ref: "Capsule",
+      },
+    ],
+    payloads: [
+      {
+        type: mongoose.ObjectId,
+        ref: "Payload",
+      },
+    ],
+    launchpad: {
+      type: mongoose.ObjectId,
+      ref: "Launchpad",
+      default: null,
+    },
+    cores: [
+      {
+        _id: false,
+        core: {
+          type: mongoose.ObjectId,
+          ref: "Core",
+          default: null,
+        },
+        flight: {
+          type: Number,
+          default: null,
+        },
+        gridfins: {
+          type: Boolean,
+          default: null,
+        },
+        legs: {
+          type: Boolean,
+          default: null,
+        },
+        reused: {
+          type: Boolean,
+          default: null,
+        },
+        landing_attempt: {
+          type: Boolean,
+          default: null,
+        },
+        landing_success: {
+          type: Boolean,
+          default: null,
+        },
+        landing_type: {
+          type: String,
+          default: null,
+        },
+        landpad: {
+          type: mongoose.ObjectId,
+          ref: "Landpad",
+          default: null,
+        },
+      },
+    ],
+    links: {
+      patch: {
+        small: {
+          type: String,
+          default: null,
+        },
+        large: {
+          type: String,
+          default: null,
+        },
+      },
+      reddit: {
+        campaign: {
+          type: String,
+          default: null,
+        },
+        launch: {
+          type: String,
+          default: null,
+        },
+        media: {
+          type: String,
+          default: null,
+        },
+        recovery: {
+          type: String,
+          default: null,
+        },
+      },
+      flickr: {
+        small: [String],
+        original: [String],
+      },
+      presskit: {
+        type: String,
+        default: null,
+      },
+      webcast: {
+        type: String,
+        default: null,
+      },
+      youtube_id: {
+        type: String,
+        default: null,
+      },
+      article: {
+        type: String,
+        default: null,
+      },
+      wikipedia: {
+        type: String,
+        default: null,
+      },
+    },
+    auto_update: {
+      type: Boolean,
+      default: true,
+    },
+    launch_library_id: {
+      type: String,
+      default: null,
     },
   },
-  ships: [],
-  telemetry: {
-    flight_club: null,
-  },
-  launch_site: {
-    site_id: {
-      type: String,
-    },
-    site_name: {
-      type: String,
-    },
-    site_name_long: {
-      type: String,
-    },
-  },
-  launch_success: {
-    type: Boolean,
-  },
-  launch_failure_details: {
-    time: {
-      type: String,
-    },
-    altitude: null,
-    reason: {
-      type: String,
-    },
-  },
-  links: {
-    mission_patch: {
-      type: String,
-    },
-    mission_patch_small: {
-      type: String,
-    },
-    reddit_campaign: null,
-    reddit_launch: null,
-    reddit_recovery: null,
-    reddit_media: null,
-    presskit: null,
-    article_link: {
-      type: String,
-    },
-    wikipedia: {
-      type: String,
-    },
-    video_link: {
-      type: String,
-    },
-    youtube_id: {
-      type: String,
-    },
-    flickr_images: {
-      type: String,
-    },
-  },
-  details: {
-    type: String,
-  },
-  static_fire_date_utc: {
-    type: Date,
-  },
-  static_fire_date_unix: {
-    type: String,
-  },
-  timeline: {
-    type: String,
-  },
-});
+  { autoCreate: true }
+);
 
 module.exports = mongoose.model("Comment", commentSchema);

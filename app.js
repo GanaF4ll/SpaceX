@@ -13,6 +13,9 @@ const port = 3004;
 app.use(express.urlencoded());
 app.use(express.json());
 
+const launchRoute = require("./routes/launchRoute");
+app.use("/launches", launchRoute);
+
 app.listen(port, () => {
   console.log(`Space X app listening on port ${port}`);
 });

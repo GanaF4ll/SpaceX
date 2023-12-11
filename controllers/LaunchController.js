@@ -14,7 +14,7 @@ exports.listAllLaunches = async (req, res) => {
 
 exports.getALaunch = async (req, res) => {
   try {
-    const Launch = await Launch.findById(req.params.mission_id);
+    const Launch = await Launch.findById(req.params.rocket_id);
 
     if (Launch) {
       res.status(200);

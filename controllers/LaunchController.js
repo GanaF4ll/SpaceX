@@ -14,21 +14,21 @@ exports.listAllLaunches = async (req, res) => {
   }
 };
 
-exports.getALaunch = async (req, res) => {
-  try {
-    const Launch = await Launch.findById(req.params.rocket_id);
+// exports.getALaunch = async (req, res) => {
+//   try {
+//     const Launch = await Launch.findById(req.params.rocket_id);
 
-    if (Launch) {
-      res.status(200);
-      res.json(Launch);
-    } else {
-      res.status(204);
-      console.log(error);
-      res.json({ message: "Launch not found" });
-    }
-  } catch (error) {
-    res.status(500);
-    console.log(error);
-    res.json({ message: "Erreur serveur" });
-  }
-};
+//     if (Launch) {
+//       res.status(200);
+//       res.json(Launch);
+//     } else {
+//       res.status(204);
+//       console.log(error);
+//       res.json({ message: "Launch not found" });
+//     }
+//   } catch (error) {
+//     res.status(500);
+//     console.log(error);
+//     res.json({ message: "Erreur serveur" });
+//   }
+// };

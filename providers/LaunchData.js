@@ -1,7 +1,6 @@
 const axios = require("axios");
 
-const baseUrl =
-  "https://docs.spacexdata.com/#5fc4c846-c373-43df-a10a-e9faf80a8b0a";
+const baseUrl = "https://api.spacexdata.com/v3/launches";
 
 exports.getLaunchData = async () => {
   let response = await axios.get(baseUrl + "/plaintext", {

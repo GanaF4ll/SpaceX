@@ -247,4 +247,4 @@ const launchSchema = new mongoose.Schema(
   { autoCreate: true }
 );
 
-module.exports = mongoose.model("Comment", commentSchema);
+module.exports = mongoose.model("Launch", launchSchema);
